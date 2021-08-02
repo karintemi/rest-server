@@ -13,9 +13,7 @@ const dbConnection = async() => {
   } catch (e) {
     console.log(e);
     throw new Error('Error en inicializar la DDBB')
-  } finally {
-
-  }
+  } 
 }
 
 module.exports = {dbConnection};

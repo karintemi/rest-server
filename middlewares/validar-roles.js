@@ -1,3 +1,4 @@
+const { response } = require('express')
 
 const esAdminRole = (req, res, next) => {
 
@@ -6,7 +7,7 @@ const esAdminRole = (req, res, next) => {
       msg: 'Se quiere verificar el rol sin validar el token primero'
     });
   }
-  const {rol, nombre} = req.usuarios;
+  const {rol, nombre} = req.usuario;
   if (rol !=='ADMIN_ROLE') {
     return req.status(401).json({
       msg: `${nombre} no es admministrador`

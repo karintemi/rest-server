@@ -16,7 +16,7 @@ const {esRoleValido, emailExiste, existeUsuarioPorId} = require('../helpers/db-v
 
 router.get('/', usuariosGet);
 
-router.put('/:id', usuariosPut, [
+router.put('/:id', [
   check('id', 'No es un ID válido').isMongoId(),
   check('id').custom(existeUsuarioPorId),
   check('rol').custom(esRoleValido),
@@ -38,7 +38,7 @@ usuariosPost);
 
 router.delete('/:id', [
   validarJWT,
-  esAdminRole,
+  // esAdminRole,
   tieneRol('ADMIN_ROLE', 'SUPER_ROLE'),
   check('id', 'No es un ID válido').isMongoId(),
   check('id').custom(existeUsuarioPorId),

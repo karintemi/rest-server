@@ -4,11 +4,12 @@ const bcryptjs = require('bcryptjs');
 
 const usuariosGet = async(req, res = response) => {
   const {limite = 5, desde = 0} = req.query;
+  const query = { estado: true };
 
 // realizo las consultas en forma paralela de cantidad de usuarios y usuarios
   const [total, usuarios] = await Promise.all([
-    Usuario.countDocuments({estado: true}),
-    Usuario.find({estado: true})
+    Usuario.countDocuments({query}),
+    Usuario.find({query})
      .skip(Number(desde))
      .limit(Number(limite))
    ])
@@ -17,7 +18,7 @@ const usuariosGet = async(req, res = response) => {
   })
 };
 const usuariosPut = async(req, res = response) => {
-  const id = req.params.id;
+  const {id} = req.params;
   const {_id, paswword, google, correo, ...resto} = req.body
 
   if (password) {
@@ -27,6 +28,7 @@ const usuariosPut = async(req, res = response) => {
 
   res.json(usuario)
 };
+
 const usuariosPost = async (req, res = response) => {
   const {nombre, correo, password, rol} = req.body;
   const usuario = new Usuario({nombre, correo, password, rol});
